@@ -75,7 +75,7 @@ bndi://echoclient/listeners/
 @implementation
 onalloc//echoclient/listeners/new{}
 {
-    bndi://listeners/
+    bndi://system/allocation/subscribers/
     {
         org.classname.listeners.InstantiationListener;
         org.classname.listeners.MemoryLeakListener;
