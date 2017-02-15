@@ -1,0 +1,84 @@
+/* Sprung 1.0 system specification */
+
+@object
+{    
+    cmdline//system.cmdline
+    {
+        write :: java.lang.System.out
+        read  :: java.lang.System.in
+    }
+}
+
+@object
+{   
+    input//socket.inputstream
+    {
+        bytes :: java.net.Socket.inputstream.bytes         /* that bytes maps to Socket byte buffer */
+        write :: java.net.Socket.inputstream.write         /* that write maps to standard socket outputstream write function */
+        poll  :: java.net.Socket.inputstream.poll          /* that poll maps to standard socket buffer poll function */
+    }
+}
+
+@object
+{
+    output//socket.outputstream                             /* that outmap maps to the socket.outputstream */
+    {
+        bytes :: java.net.Socket.outputstream.bytes         /* that bytes maps to Socket byte buffer */
+        write :: java.net.Socket.outputstream.write         /* that write maps to standard socket outputstream write function */
+        poll  :: java.net.Socket.outputstream.poll          /* that poll maps to standard socket buffer poll function */
+    }
+}
+
+@register
+bndi://echoserver/systems/
+
+@register
+bndi://echoserver/objects/
+
+@register
+bndi://echoserver/listeners/onconnect/{this.id}
+
+@register
+bndi://echoserver/subscribers/onconnect/{this.id}
+
+@design
+bndi://echoclient/subscribers/onconnect/
+{
+    java://classname/function/{parama}
+}
+
+@implementation
+bndi://echoclient/systems/
+{
+    bndi://echoclient/objects/
+    {
+        onalloc//echoclient/listeners/new{}
+        
+        ondelete//echoclient/listeners/delete{}
+        
+        oncleanup//echoclient/listeners/clean{}
+    }
+}
+
+@implementation
+bndi://echoclient/listeners/
+{
+    onconnect//echoclient/subscribers/{cmdline.write("connected...")}           
+    
+    onreceipt//echoclient/subscribers/{cmdline.write(input)}
+    
+    ondispatch//echoclient/subscribers/{cmdline.write(output)}
+    
+    onkeypress{KEY.ENTER}//echoclient/subscribers/{output.write}
+}
+
+@implementation
+onalloc//echoclient/listeners/new{}
+{
+    bndi://listeners/
+    {
+        org.classname.listeners.InstantiationListener;
+        org.classname.listeners.MemoryLeakListener;
+        org.classname.listeners.SystemObserverListener;
+    }
+}
