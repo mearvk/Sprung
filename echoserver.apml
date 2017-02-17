@@ -6,6 +6,12 @@ bndi://echoclient/subscribers/onconnect/
     java://classname/function/{parama}
 }
 
+@pragma
+bndi://echoclient/objects/processors
+{
+    bndi://processor/java:classname/doproc/{parama[1]}
+}
+
 ----------------------------------------------
 
 @register
@@ -19,6 +25,9 @@ bndi://echoserver/listeners/onconnect/{this.id}
 
 @register
 bndi://echoserver/subscribers/onconnect/{this.id}
+
+@register
+bndi://
 
 ----------------------------------------------
 
