@@ -1,4 +1,18 @@
 /* Sprung 1.0 system specification */
+ 
+@pragma  
+/shorthand                              /* any branch that has shorthand extension can make these aliases useful */
+{
+    bndi:alias(doprocess)::(doproc)     /*doprocess, doproc equivalence established */
+    bndi:alias(process)::(proc)         /*process, proc equivalence established */
+}
+
+@pragma
+/processor{}                            /* processor branching supports /doprocess and /process functions */
+{
+    /doprocess/{parama(0..1)}           /* doprocess requires zero or one param */
+    /process/{parama(0..1)}             
+}
 
 @pragma
 bndi://echoclient/subscribers/onconnect/
@@ -6,10 +20,14 @@ bndi://echoclient/subscribers/onconnect/
     java://classname/function/{parama}
 }
 
-@pragma
+@pragma 
 bndi://echoclient/objects/processors
 {
-    bndi://processor/java:classname/doproc/{parama[1]}
+    bndi://processor/java:classname.doprocess(Object o);
+
+    bndi://processor/java:classname.process(Object o);   
+
+    bndi://processor/java:interface.org.sprung.Processor;
 }
 
 ----------------------------------------------
