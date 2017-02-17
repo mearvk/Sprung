@@ -1,16 +1,16 @@
 /* Sprung 1.0 system specification */
  
 @pragma  
-/shorthand                              /* any branch that has shorthand extension can make these aliases useful */
+/shorthand                                  /* any branch that has shorthand extension can make these aliases useful */
 {
-    bndi:alias(doprocess)::(doproc)     /*doprocess, doproc equivalence established */
-    bndi:alias(process)::(proc)         /*process, proc equivalence established */
+    bndi:alias(doprocess)::(doproc)         /* doprocess, doproc equivalence established */
+    bndi:alias(process)::(proc)             /* process, proc equivalence established */
 }
 
 @pragma
-/processor{}                            /* processor branching supports /doprocess and /process functions */
+/processor{}                                /* processor branching supports /doprocess and /process functions */
 {
-    /doprocess/{parama(0..1)}           /* doprocess requires zero or one param */
+    /doprocess/{parama(0..1)}               /* doprocess requires zero or one param */
     /process/{parama(0..1)}             
 }
 
@@ -18,6 +18,12 @@
 bndi://echoclient/subscribers/onconnect/
 {
     java://classname/function/{parama}
+}
+
+@pragma                                     /* when socket exits; do continue to //echoclient/exit{} */
+bndi://echoclient/network/onexit/
+{
+    bndi://echoclient/exit{}
 }
 
 @pragma 
