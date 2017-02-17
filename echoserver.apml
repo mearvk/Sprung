@@ -1,33 +1,12 @@
 /* Sprung 1.0 system specification */
 
-@object
-{    
-    cmdline//system.cmdline
-    {
-        write :: java.lang.System.out
-        read  :: java.lang.System.in
-    }
-}
-
-@object
-{   
-    input//socket.inputstream
-    {
-        bytes :: java.net.Socket.inputstream.bytes         /* that bytes maps to Socket byte buffer */
-        write :: java.net.Socket.inputstream.write         /* that write maps to standard socket outputstream write function */
-        poll  :: java.net.Socket.inputstream.poll          /* that poll maps to standard socket buffer poll function */
-    }
-}
-
-@object
+@pragma
+bndi://echoclient/subscribers/onconnect/
 {
-    output//socket.outputstream                             /* that outmap maps to the socket.outputstream */
-    {
-        bytes :: java.net.Socket.outputstream.bytes         /* that bytes maps to Socket byte buffer */
-        write :: java.net.Socket.outputstream.write         /* that write maps to standard socket outputstream write function */
-        poll  :: java.net.Socket.outputstream.poll          /* that poll maps to standard socket buffer poll function */
-    }
+    java://classname/function/{parama}
 }
+
+----------------------------------------------
 
 @register
 bndi://echoserver/systems/
@@ -41,11 +20,38 @@ bndi://echoserver/listeners/onconnect/{this.id}
 @register
 bndi://echoserver/subscribers/onconnect/{this.id}
 
-@design
-bndi://echoclient/subscribers/onconnect/
-{
-    java://classname/function/{parama}
+----------------------------------------------
+
+@object
+{    
+    cmdline//system.cmdline
+    {
+        write :: java.lang.System.out
+        read  :: java.lang.System.in
+    }
 }
+
+@object
+{   
+    input//socket.inputstream
+    {
+        bytes :: java.net.Socket.getInputstream.bytes         /* that bytes maps to Socket byte buffer */
+        write :: java.net.Socket.getInputstream.write         /* that write maps to standard socket outputstream write function */
+        poll  :: java.net.Socket.getInputstream.poll          /* that poll maps to standard socket buffer poll function */
+    }
+}
+
+@object
+{
+    output//socket.outputstream                             /* that outmap maps to the socket.outputstream */
+    {
+        bytes :: java.net.Socket.getOutputstream.bytes         /* that bytes maps to Socket byte buffer */
+        write :: java.net.Socket.getOutputstream.write         /* that write maps to standard socket outputstream write function */
+        poll  :: java.net.Socket.getOutputstream.poll          /* that poll maps to standard socket buffer poll function */
+    }
+}
+
+----------------------------------------------
 
 @implementation
 bndi://echoclient/systems/
@@ -83,7 +89,9 @@ onalloc//echoclient/listeners/new{}
     }
 }
 
-@with  
+----------------------------------------------
+
+@with   /* scope definitives; ie who can 'add', 'remove' objects from BNDI sets 
 {
     @add
     bndi://echoserver/objects/
@@ -96,6 +104,6 @@ onalloc//echoclient/listeners/new{}
     @remove
     bndi://echoserver/objects
     {
-        
+        {}  /* empty set */
     }
 }
