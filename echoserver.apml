@@ -1,4 +1,4 @@
-/* Max Rupplin -- Sprung 1.0 system specification */
+/* Max Rupplin -- Sprung 1.0xx system specification */
  
 @pragma  
 /shorthand                                                                  /* any branch that has shorthand extension can make these aliases useful */
