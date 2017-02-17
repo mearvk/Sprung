@@ -29,10 +29,8 @@ bndi://echoclient/network/onexit/
 @pragma 
 bndi://echoclient/objects/processors
 {
-    bndi://processor/java:classname.doprocess(Object o);
-
+    bndi://processor/java:classname.doprocess(Object o);                    /* processor bindings should look like these exemplars */
     bndi://processor/java:classname.process(Object o);   
-
     bndi://processor/java:interface.org.sprung.Processor;
 }
 
@@ -51,7 +49,7 @@ bndi://echoserver/listeners/onconnect/{this.id}
 bndi://echoserver/subscribers/onconnect/{this.id}
 
 @register
-bndi://
+bndi://blind                                                                /* namespace such that it would run (Sprung add, drop, connect, etc functions) as expected */
 
 ----------------------------------------------
 
